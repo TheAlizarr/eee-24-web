@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester 3 Subjects - SRM VEC EEE'24</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        // Set theme on page load
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div class="container mx-auto px-6 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">Semester 3 Subjects</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Select a subject to view its notes and resources.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Subject Card 1 -->
+            <a href="/files/sem3/subject1.pdf" target="_blank" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 class="text-xl font-semibold">Electrical Machines - I</h3>
+                <p class="text-white-700 dark:text-white-500 mt-2">EE3362</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">View Notes & QB</p>
+            </a>
+            <!-- Subject Card 2 -->
+            <a href="/files/sem3/subject2.pdf" target="_blank" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 class="text-xl font-semibold">Digital Logic Circuits</h3>
+                <p class="text-white-700 dark:text-white-500 mt-2">EE3361</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">View Notes & QB</p>
+            </a>
+            <!-- Subject Card 3 -->
+            <a href="/files/sem3/subject3.pdf" target="_blank" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 class="text-xl font-semibold">Electric Circuit Analysis</h3>
+                <p class="text-white-700 dark:text-white-500 mt-2">EE3363</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">View Notes & QB</p>
+            </a>
+            <!-- Add more subject cards as needed -->
+             <a href="/files/sem3/subject4.pdf" target="_blank" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 class="text-xl font-semibold">Electron Devices and Circuits</h3>
+                <p class="text-white-700 dark:text-white-500 mt-2">EI3361</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">View Notes & QB</p>
+            </a>
+             <a href="/files/sem3/subject5.pdf" target="_blank" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 class="text-xl font-semibold">Electromagnetic Fields</h3>
+                <p class="text-white-700 dark:text-white-500 mt-2">EC3365</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">View Notes & QB</p>
+            </a>
+             <a href="/files/sem3/subject6.pdf" target="_blank" class="block bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <h3 class="text-xl font-semibold">Transforms and Partial Differential Equations</h3>
+                <p class="text-white-700 dark:text-white-500 mt-2">MA3321</p>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">View Notes & QB</p>
+            </a>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="index.html" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                &larr; Back to Home
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
