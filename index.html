@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EEE Department Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a more modern look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1f2937;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #333;
+        }
+        
+        /* Animation classes for fade-in effect on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Cursor responsive button effect */
+        .btn-responsive {
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease-in-out;
+        }
+        .btn-responsive:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .dark .btn-responsive:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Card hover effect */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+         .dark .card-hover:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Nav Link Hover Effect */
+        .nav-link {
+            position: relative;
+            padding: 8px 4px;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #3b82f6; /* Corresponds to blue-500 */
+            transition: width 0.3s ease-out;
+        }
+        .dark .nav-link::after {
+            background-color: #60a5fa; /* Corresponds to blue-400 */
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-500">
+
+    <!-- Header -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+        <div class="container mx-auto px-6 flex justify-between items-center h-20">
+            <a href="#" class="text-xl font-semibold tracking-wider text-gray-900 dark:text-white">
+                SRM VEC <span class="font-bold text-blue-600 dark:text-blue-500">EEE'24</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#home" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500">Home</a>
+                <a href="#resources" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500">Resources</a>
+                <a href="#ebooks" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500">E-Books</a>
+                <a href="#ai-tools" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500">AI Tools</a>
+                <a href="#infodump" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500">Info Dump</a>
+                <a href="#contact" class="nav-link text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-2">
+                <button id="theme-toggle" class="h-10 w-10 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <svg id="theme-icon-light" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <svg id="theme-icon-dark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </button>
+                 <button id="mobile-menu-button" class="md:hidden h-10 w-10 flex items-center justify-center rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-md">
+             <a href="#home" class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition py-3 px-6 text-center">Home</a>
+             <a href="#resources" class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition py-3 px-6 text-center border-t border-gray-200 dark:border-gray-700">Resources</a>
+             <a href="#ebooks" class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition py-3 px-6 text-center border-t border-gray-200 dark:border-gray-700">E-Books</a>
+             <a href="#ai-tools" class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition py-3 px-6 text-center border-t border-gray-200 dark:border-gray-700">AI Tools</a>
+             <a href="#infodump" class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition py-3 px-6 text-center border-t border-gray-200 dark:border-gray-700">Info Dump</a>
+             <a href="#contact" class="block text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-500 transition py-3 px-6 text-center border-t border-gray-200 dark:border-gray-700">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center bg-white dark:bg-gray-900 pt-20">
+            <div class="container mx-auto px-6 text-center">
+                <div class="fade-in">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white mb-4 leading-tight">
+                        Empowering EEE Minds.
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+                        Your centralized hub for notes, resources, and collaborative learning. Everything you need to succeed, all in one place.
+                    </p>
+                    <div class="flex justify-center items-center gap-4">
+                        <a href="#resources" class="btn-responsive bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700">
+                            Explore Resources
+                        </a>
+                         <a href="#" class="btn-responsive bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+                            AI Chatbot <span class="text-xs ml-1">(Soon)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updates Corner -->
+        <section id="updates" class="py-20 bg-gray-50 dark:bg-gray-900">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Latest Updates</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Stay current with the latest news and announcements.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Update Card 1 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md fade-in">
+                        <p class="text-sm text-blue-500 dark:text-blue-400 font-medium">Sept 30, 2025</p>
+                        <h3 class="text-xl font-semibold my-2">Semester Exam Timetable Released</h3>
+                        <p class="text-gray-600 dark:text-gray-400">The official timetable for the upcoming semester examinations has been published. Please check the resources section for the PDF.</p>
+                    </div>
+                    <!-- Update Card 2 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md fade-in" style="transition-delay: 100ms;">
+                        <p class="text-sm text-blue-500 dark:text-blue-400 font-medium">Sept 28, 2025</p>
+                        <h3 class="text-xl font-semibold my-2">New Notes on Power Electronics Added</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Comprehensive notes for the Power Electronics module (EE8551) have been uploaded. Find them in the notes bank under Semester 5.</p>
+                    </div>
+                    <!-- Update Card 3 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md fade-in" style="transition-delay: 200ms;">
+                        <p class="text-sm text-blue-500 dark:text-blue-400 font-medium">Sept 25, 2025</p>
+                        <h3 class="text-xl font-semibold my-2">Guest Lecture on EV Technology</h3>
+                        <p class="text-gray-600 dark:text-gray-400">A guest lecture on modern EV technology is scheduled for next Friday. Don't miss out on this insightful session. Link in the info dump!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Resources Section -->
+        <section id="resources" class="py-20 bg-white dark:bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Resource Bank</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Well-organized question banks and notes for every subject.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Resource Card: Semester 3 -->
+                    <div class="card-hover p-8 text-center bg-gray-50 dark:bg-gray-700 rounded-2xl fade-in">
+                        <h3 class="text-2xl font-bold mb-2">Semester 3</h3>
+                        <a href="#" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">View Subjects &rarr;</a>
+                    </div>
+                     <!-- Resource Card: Semester 4 -->
+                     <div class="card-hover p-8 text-center bg-gray-50 dark:bg-gray-700 rounded-2xl fade-in" style="transition-delay: 100ms;">
+                        <h3 class="text-2xl font-bold mb-2">Semester 4</h3>
+                        <a href="#" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">View Subjects &rarr;</a>
+                    </div>
+                     <!-- Resource Card: Semester 5 -->
+                     <div class="card-hover p-8 text-center bg-gray-50 dark:bg-gray-700 rounded-2xl fade-in" style="transition-delay: 200ms;">
+                        <h3 class="text-2xl font-bold mb-2">Semester 5</h3>
+                        <a href="#" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">View Subjects &rarr;</a>
+                    </div>
+                     <!-- Resource Card: Semester 6 -->
+                     <div class="card-hover p-8 text-center bg-gray-50 dark:bg-gray-700 rounded-2xl fade-in" style="transition-delay: 300ms;">
+                        <h3 class="text-2xl font-bold mb-2">Semester 6</h3>
+                        <a href="#" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">View Subjects &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- E-Book Library -->
+        <section id="ebooks" class="py-20 bg-gray-50 dark:bg-gray-900">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">E-Book Library</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Curated collection of subject-related and general purpose books.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Book Card 1 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md fade-in">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold">Fundamentals of Electric Circuits</h3>
+                            <p class="text-gray-500 dark:text-gray-400 mt-1">Charles K. Alexander</p>
+                            <a href="#" class="btn-responsive mt-4 inline-block bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold py-2 px-4 rounded-full">Download</a>
+                        </div>
+                    </div>
+                    <!-- Book Card 2 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md fade-in" style="transition-delay: 100ms;">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold">Sapiens: A Brief History of Humankind</h3>
+                            <p class="text-gray-500 dark:text-gray-400 mt-1">Yuval Noah Harari</p>
+                            <a href="#" class="btn-responsive mt-4 inline-block bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-sm font-semibold py-2 px-4 rounded-full">General Reading</a>
+                        </div>
+                    </div>
+                    <!-- Book Card 3 -->
+                    <div class="card-hover bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md fade-in" style="transition-delay: 200ms;">
+                         <div class="p-6">
+                            <h3 class="text-xl font-semibold">Microelectronic Circuits</h3>
+                            <p class="text-gray-500 dark:text-gray-400 mt-1">Adel S. Sedra</p>
+                            <a href="#" class="btn-responsive mt-4 inline-block bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold py-2 px-4 rounded-full">Download</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Study Tools Section -->
+        <section id="ai-tools" class="py-20 bg-white dark:bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-3">
+                        <svg class="w-8 h-8 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.553L16.5 21.75l-.398-1.197a3.375 3.375 0 00-2.396-2.396L12.75 18l1.197-.398a3.375 3.375 0 002.396-2.396L16.5 14.25l.398 1.197a3.375 3.375 0 002.396 2.396L20.25 18l-1.197.398a3.375 3.375 0 00-2.396 2.396z" />
+                        </svg>
+                         AI Study Tools
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Powered by Gemini. Get instant, grounded explanations for complex topics.</p>
+                </div>
+                <div class="max-w-4xl mx-auto bg-gray-50 dark:bg-gray-900/50 p-6 sm:p-8 rounded-2xl shadow-lg fade-in border border-gray-200 dark:border-gray-700">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="text" id="ai-prompt" placeholder="e.g., Explain Maxwell's Equations" class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 focus:border-blue-500 focus:ring-0 transition">
+                        <button id="generate-explanation-btn" class="btn-responsive bg-blue-600 text-white font-semibold py-3 px-6 sm:px-8 rounded-lg shadow-lg hover:bg-blue-700 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span>Generate</span>
+                        </button>
+                    </div>
+                    <div id="ai-result-container" class="mt-6 p-6 rounded-lg bg-white dark:bg-gray-800 min-h-[120px] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
+                        <!-- Loading spinner -->
+                        <div id="loading-spinner" class="hidden justify-center items-center py-4">
+                            <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                        <!-- Result content -->
+                        <div id="ai-result-content" class="prose prose-blue dark:prose-invert max-w-none">
+                            <p>Your explanation will appear here. Try asking about a topic like "Ohm's Law" or "what is a semiconductor?".</p>
+                        </div>
+                         <!-- Sources -->
+                        <div id="ai-sources" class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Dump -->
+        <section id="infodump" class="py-20 bg-gray-50 dark:bg-gray-900">
+             <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Info Dump</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Essential links to tools, tutorials, and repositories.</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <!-- Category: Online Tools -->
+                    <div class="mb-8 fade-in">
+                        <h3 class="text-2xl font-semibold mb-4 border-b-2 border-blue-500 pb-2">Online Tools</h3>
+                        <ul class="space-y-3 list-disc list-inside text-gray-700 dark:text-gray-300">
+                            <li><a href="#" class="hover:underline">Falstad Circuit Simulator</a></li>
+                            <li><a href="#" class="hover:underline">WolframAlpha: Computational Intelligence</a></li>
+                            <li><a href="#" class="hover:underline">Tinkercad: Free Online Simulator</a></li>
+                        </ul>
+                    </div>
+                     <!-- Category: YouTube Playlists -->
+                    <div class="mb-8 fade-in" style="transition-delay: 100ms;">
+                        <h3 class="text-2xl font-semibold mb-4 border-b-2 border-green-500 pb-2">YouTube Playlists</h3>
+                        <ul class="space-y-3 list-disc list-inside text-gray-700 dark:text-gray-300">
+                             <li><a href="#" class="hover:underline">Neso Academy: Digital Electronics</a></li>
+                             <li><a href="#" class="hover:underline">The Organic Chemistry Tutor: Circuit Analysis</a></li>
+                             <li><a href="#" class="hover:underline">3Blue1Brown: Essence of Linear Algebra</a></li>
+                        </ul>
+                    </div>
+                     <!-- Category: Git Repos -->
+                    <div class="fade-in" style="transition-delay: 200ms;">
+                        <h3 class="text-2xl font-semibold mb-4 border-b-2 border-purple-500 pb-2">GitHub Repositories</h3>
+                        <ul class="space-y-3 list-disc list-inside text-gray-700 dark:text-gray-300">
+                            <li><a href="#" class="hover:underline">Awesome Electronics: A curated list of resources</a></li>
+                            <li><a href="#" class="hover:underline">DSP Lab Projects in Python</a></li>
+                        </ul>
+                    </div>
+                </div>
+             </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-6 py-12">
+            <div class="text-center">
+                <h2 class="text-2xl font-bold mb-4">Get In Touch</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">Connect with us on social media.</p>
+                <div class="flex justify-center space-x-6">
+                    <!-- Social Icon: LinkedIn -->
+                    <a href="#" class="text-gray-500 hover:text-blue-700 dark:hover:text-blue-500 transition">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                    </a>
+                    <!-- Social Icon: GitHub -->
+                     <a href="#" class="text-gray-500 hover:text-gray-900 dark:hover:text-white transition">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
+                    </a>
+                    <!-- Social Icon: Discord -->
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.36986C18.2751 3.44336 16.1292 3 13.8956 3C11.6621 3 9.51619 3.44336 7.47432 4.36986C5.43245 5.29635 3.86818 6.64632 2.93952 8.2828C2.01085 9.91927 1.75 11.8992 1.75 13.9492C1.75 17.1591 3.23538 20.0491 5.72832 22.069C6.98506 23.0189 8.44199 23.4989 10.1581 23.4989C11.1219 23.4989 12.0463 23.2989 12.8715 22.849C13.6966 22.399 14.3924 21.789 14.9385 20.9791L15.2289 20.5491C15.0006 20.6791 14.7525 20.7891 14.4848 20.8791C14.2172 20.9691 13.9495 21 13.6818 21C11.6713 21 9.99127 20.4491 8.64184 19.3492C7.29241 18.2492 6.5 16.6992 6.5 14.6992C6.5 13.8892 6.60965 13.1192 6.829 12.3892C7.04834 11.6592 7.37735 10.9892 7.81602 10.3792C8.2547 9.76925 8.78304 9.25927 9.40104 8.84929C10.019 8.43932 10.7067 8.15933 11.464 8.00934C11.6833 7.95934 11.8927 7.91934 12.0922 7.88934C12.2917 7.85934 12.4912 7.83934 12.6906 7.82934C12.8901 7.81934 13.1094 7.80934 13.3484 7.80934C15.4093 7.80934 17.1509 8.35932 18.5732 9.45929C19.9955 10.5593 20.75 12.1192 20.75 14.1392C20.75 14.8892 20.6207 15.6192 20.362 16.3292C20.1033 17.0392 19.725 17.6992 19.227 18.3092C18.729 18.9192 18.1317 19.4592 17.435 19.9292C16.7383 20.3992 15.9722 20.7891 15.1367 21.0991C15.5463 21.6891 16.0356 22.2591 16.6046 22.809C17.1735 23.359 17.7922 23.7289 18.4605 23.9189C19.2085 24.1489 20.0161 24.1489 20.8834 23.9189C21.7506 23.6889 22.5481 23.239 23.2759 22.569C24 21.899 24.5244 21.0491 24.8491 20.0191C25.1738 18.9891 25.25 17.8992 25.0772 16.7492C24.9045 15.5992 24.4727 14.4992 23.782 13.4492C23.0913 12.3992 22.1812 11.4592 21.0519 10.6292C22.0615 9.38927 22.5663 7.95933 22.5663 6.33938C22.5663 5.51941 22.407 4.75943 22.0883 4.05944C21.7697 3.35946 21.3117 2.74948 20.7144 2.2295C20.1171 1.70952 19.4001 1.29954 18.5634 0.999554C17.7268 0.699569 16.8006 0.5 15.785 0.5C14.7694 0.5 13.8035 0.649572 12.8873 0.949557C11.9712 1.24954 11.1347 1.69952 10.3781 2.2995C9.62145 2.89948 8.97447 3.62946 8.43715 4.48944C7.89984 5.34941 7.5 6.30938 7.5 7.36936C7.5 8.01934 7.58965 8.62932 7.76898 9.19929C7.94832 9.76927 8.18732 10.2793 8.486 10.7293C8.18732 10.5993 7.91832 10.4693 7.67898 10.3393C7.43965 10.2093 7.23 10.0893 7.04999 9.97931C6.31266 9.54933 5.645 9.19934 5.04699 8.92936C4.44898 8.65937 3.90065 8.45938 3.40198 8.32939C3.16265 8.2494 2.93332 8.18941 2.71398 8.14941C2.49465 8.10942 2.27531 8.07942 2.05598 8.05943C2.42465 6.88946 3.09132 5.92949 4.05598 5.17952C5.02065 4.42955 6.18465 3.95957 7.54798 3.76958C7.38865 3.56959 7.24898 3.3796 7.12898 3.2096C7.00898 3.03961 6.90865 2.87962 6.82798 2.72962C6.00065 1.70966 5.68698 0.89968 5.88698 0.299701C6.08698 -0.300278 6.78265 -0.550268 7.97398 -0.450272C9.16531 -0.350275 10.2273 -0.0102834 11.159 -0.490265L12.7836 1.13972C12.9329 1.17972 13.0823 1.20972 13.2316 1.22972C13.3809 1.24972 13.5403 1.25972 13.7196 1.25972C14.7353 1.25972 15.6813 1.45971 16.5576 1.85969C17.434 2.25966 18.2006 2.81964 18.8576 3.5396C19.5146 4.25957 20.0123 5.09953 20.3506 6.05948C20.689 7.01943 20.8483 8.02938 20.8483 9.08934C20.8483 9.73932 20.7686 10.3693 20.6093 10.9793C20.4499 11.5892 20.2109 12.1492 19.8923 12.6592C20.4406 12.5292 20.9293 12.4492 21.3583 12.4192C21.7873 12.3892 22.166 12.3992 22.495 12.4492C22.2163 12.0192 21.997 11.6092 21.8376 11.2193C21.6783 10.8293 21.5686 10.4693 21.5086 10.1393C21.369 9.38933 21.5186 8.69936 21.958 8.06938C22.3973 7.43941 23.0463 6.96943 23.905 6.65944C23.6363 6.45945 23.3776 6.27945 23.1289 6.11946C22.8803 5.95946 22.6413 5.80947 22.412 5.66947C21.6846 5.1795 20.8576 4.82951 19.9309 4.61952C18.9943 4.40954 18.008 4.30954 16.9719 4.30954C16.3219 4.30954 15.6919 4.37954 15.082 4.51953C14.472 4.65952 13.882 4.8595 13.312 5.11948C13.882 4.93949 14.4223 4.7995 14.9329 4.70951C15.4436 4.61952 15.9146 4.56952 16.3459 4.55952C16.2259 4.85951 16.1159 5.15949 16.0159 5.45948C15.9159 5.75946 15.8259 6.05945 15.7459 6.35944L14.7359 8.35938C15.5459 8.75936 16.2159 9.25933 16.7459 9.85929C17.2759 10.4593 17.6559 11.1492 17.8859 11.9292C17.9959 12.3192 18.0459 12.7192 18.0359 13.1292C18.0259 13.5392 17.9659 13.9492 17.8559 14.3592L19.5359 13.8892C19.4659 13.5292 19.4359 13.1692 19.4459 12.8092C19.4559 12.4492 19.5059 12.0992 19.5959 11.7593C19.8959 10.6593 19.7459 9.74933 19.1459 9.02936C18.5459 8.30938 17.6059 7.8294 16.3259 7.58941C16.5659 7.01943 16.7359 6.42945 16.8359 5.81947C16.9359 5.20948 16.9759 4.5995 16.9559 3.98952C17.4259 3.86953 17.8859 3.80954 18.3359 3.80954C19.0359 3.80954 19.6859 3.92953 20.2859 4.16952C20.8859 4.4095 21.4159 4.75948 21.8759 5.21946L20.317 4.36986Z"></path></svg>
+                    </a>
+                </div>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-8">&copy; 2025 EEE Department Hub. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const darkIcon = document.getElementById('theme-icon-dark');
+
+        // Check for saved theme in localStorage
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+            darkIcon.classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            lightIcon.classList.add('hidden');
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggle.addEventListener('click', function() {
+            // toggle icons
+            lightIcon.classList.toggle('hidden');
+            darkIcon.classList.toggle('hidden');
+
+            // if set via local storage previously
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            // if NOT set via local storage previously
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        themeToggle.addEventListener('click', function() {
+            // toggle icons
+            lightIcon.classList.toggle('hidden');
+            darkIcon.classList.toggle('hidden');
+
+            // toggle dark class on the html element
+            document.documentElement.classList.toggle('dark');
+
+            // update local storage based on the new state
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                localStorage.setItem('color-theme', 'light');
+            }
+        });
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // --- Animate on Scroll ---
+        const fadeInElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        fadeInElements.forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- Header Scroll Effect ---
+        const header = document.getElementById('header');
+        window.onscroll = function() {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg', 'bg-white/95', 'dark:bg-gray-900/95');
+            } else {
+                header.classList.remove('shadow-lg', 'bg-white/95', 'dark:bg-gray-900/95');
+            }
+        };
+
+        // --- Gemini AI Feature ---
+        const generateBtn = document.getElementById('generate-explanation-btn');
+        const promptInput = document.getElementById('ai-prompt');
+        const resultContainer = document.getElementById('ai-result-container');
+        const resultContent = document.getElementById('ai-result-content');
+        const sourcesContainer = document.getElementById('ai-sources');
+        const loadingSpinner = document.getElementById('loading-spinner');
+
+        const callGeminiAPI = async (userQuery, retries = 3, delay = 1000) => {
+            loadingSpinner.style.display = 'flex';
+            resultContent.innerHTML = '';
+            sourcesContainer.innerHTML = '';
+            generateBtn.disabled = true;
+            
+            const systemPrompt = "You are an expert in Electrical and Electronics Engineering. Provide a short, quick, and brief explanation for the following concept, suitable for a quick review. Keep the explanation to a single paragraph and be concise.";
+            const apiKey = ""; // API key is handled by the environment.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                },
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        // Exponential backoff
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return callGeminiAPI(userQuery, retries - 1, delay * 2);
+                    }
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    const text = candidate.content.parts[0].text;
+                    // Super basic markdown to HTML conversion
+                    let htmlContent = text
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                        .replace(/^(#+)\s*(.*)/gm, (match, hashes, content) => {
+                           const level = hashes.length;
+                           return `<h${level+2} class="text-xl font-semibold mt-4 mb-2">${content}</h${level+2}>`;
+                        })
+                        .replace(/^- (.*)/gm, '<li class="ml-4 list-disc">$1</li>')
+                        .replace(/\n/g, '<br>');
+
+                    resultContent.innerHTML = htmlContent;
+
+                    // Display sources
+                    const groundingMetadata = candidate.groundingMetadata;
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        const sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+
+                        if (sources.length > 0) {
+                            let sourcesHtml = '<h4 class="font-semibold text-sm mb-2 text-gray-600 dark:text-gray-400">Sources:</h4><ul class="space-y-1">';
+                            sources.forEach(source => {
+                                sourcesHtml += `<li><a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline text-sm">${source.title}</a></li>`;
+                            });
+                            sourcesHtml += '</ul>';
+                            sourcesContainer.innerHTML = sourcesHtml;
+                        }
+                    }
+                } else {
+                    resultContent.innerHTML = '<p class="text-red-500">Sorry, I couldn\'t generate an explanation for that. Please try another topic.</p>';
+                }
+
+            } catch (error) {
+                console.error("Gemini API call failed:", error);
+                resultContent.innerHTML = `<p class="text-red-500">An error occurred. Please check the console for details and try again later.</p>`;
+            } finally {
+                loadingSpinner.style.display = 'none';
+                generateBtn.disabled = false;
+            }
+        };
+
+        generateBtn.addEventListener('click', () => {
+            const query = promptInput.value.trim();
+            if (query) {
+                callGeminiAPI(query);
+            } else {
+                resultContent.innerHTML = '<p class="text-yellow-500">Please enter a topic to explain.</p>';
+            }
+        });
+
+    </script>
+
+</body>
+</html>
