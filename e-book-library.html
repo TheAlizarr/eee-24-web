@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Book Library - SRM VEC EEE'24</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        // Set theme on page load
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div class="container mx-auto px-6 py-12">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">E-Book Library</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">Search for books by title or author.</p>
+        </div>
+
+        <!-- Search Input -->
+        <div class="max-w-xl mx-auto mb-12">
+            <input type="text" id="searchInput" placeholder="Search for a book..." class="w-full px-5 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+        </div>
+
+        <!-- Book Grid -->
+        <div id="bookGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+            
+            <!-- Book Card 1 -->
+            <a href="#" class="book-card group" data-title="Fundamentals of Electric Circuits by Charles K. Alexander" data-author="Charles K. Alexander">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform-gpu hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://placehold.co/400x600/3b82f6/ffffff?text=Fundamentals+of+Electric+Circuits&font=inter" alt="Book Cover" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-md truncate group-hover:text-blue-600 dark:group-hover:text-blue-500">Fundamentals of Electric Circuits</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Charles K. Alexander</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Book Card 2 -->
+            <a href="#" class="book-card group" data-title="Microelectronic Circuits by Sedra Smith" data-author="Sedra Smith">
+                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform-gpu hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://placehold.co/400x600/10b981/ffffff?text=Microelectronic+Circuits&font=inter" alt="Book Cover" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-md truncate group-hover:text-blue-600 dark:group-hover:text-blue-500">Microelectronic Circuits</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Sedra Smith</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Book Card 3 -->
+            <a href="#" class="book-card group" data-title="Principles of Electromagnetics by Matthew N.O. Sadiku" data-author="Matthew N.O. Sadiku">
+                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transform-gpu hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                    <img src="https://placehold.co/400x600/ef4444/ffffff?text=Principles+of+Electromagnetics&font=inter" alt="Book Cover" class="w-full h-auto object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-md truncate group-hover:text-blue-600 dark:group-hover:text-blue-500">Principles of Electromagnetics</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Matthew N.O. Sadiku</p>
+                    </div>
+                </div>
+            </a>
+            
+             <!-- Add more book cards here following the same format -->
+
+        </div>
+        
+        <!-- No results message -->
+        <div id="noResults" class="text-center py-12 hidden">
+             <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300">No books found</h3>
+             <p class="text-gray-500 dark:text-gray-400 mt-1">Try searching for a different title or author.</p>
+        </div>
+
+
+        <div class="text-center mt-12">
+            <a href="index.html" class="inline-block bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                &larr; Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const bookGrid = document.getElementById('bookGrid');
+            const bookCards = bookGrid.getElementsByClassName('book-card');
+            const noResults = document.getElementById('noResults');
+
+            searchInput.addEventListener('keyup', () => {
+                const query = searchInput.value.toLowerCase();
+                let resultsFound = false;
+
+                for (let card of bookCards) {
+                    const title = card.dataset.title.toLowerCase();
+                    const author = card.dataset.author.toLowerCase();
+
+                    if (title.includes(query) || author.includes(query)) {
+                        card.style.display = 'block';
+                        resultsFound = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+                
+                noResults.style.display = resultsFound ? 'none' : 'block';
+            });
+        });
+    </script>
+
+</body>
+</html>
