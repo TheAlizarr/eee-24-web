@@ -233,38 +233,33 @@
         </section>
 
         <!-- AI Study Tools Section -->
-        <section id="ai-tools" class="py-20 bg-white dark:bg-gray-800">
+         <section id="ai-tools" class="py-20 bg-gray-50 dark:bg-gray-900">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-3">
-                        <svg class="w-8 h-8 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.553L16.5 21.75l-.398-1.197a3.375 3.375 0 00-2.396-2.396L12.75 18l1.197-.398a3.375 3.375 0 002.396-2.396L16.5 14.25l.398 1.197a3.375 3.375 0 002.396 2.396L20.25 18l-1.197.398a3.375 3.375 0 00-2.396 2.396z" />
-                        </svg>
-                         AI Study Tools
-                    </h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Powered by Gemini. Get instant, grounded explanations for complex topics.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">AI Study Tools</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Powered by Gemini</p>
                 </div>
-                <div class="max-w-4xl mx-auto bg-gray-50 dark:bg-gray-900/50 p-6 sm:p-8 rounded-2xl shadow-lg fade-in border border-gray-200 dark:border-gray-700">
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <input type="text" id="ai-prompt" placeholder="e.g., Explain Maxwell's Equations" class="w-full px-4 py-3 rounded-lg bg-white dark:bg-gray-700 border-2 border-gray-200 dark:border-gray-600 focus:border-blue-500 focus:ring-0 transition">
-                        <button id="generate-explanation-btn" class="btn-responsive bg-blue-600 text-white font-semibold py-3 px-6 sm:px-8 rounded-lg shadow-lg hover:bg-blue-700 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
-                            <span>Generate</span>
-                        </button>
-                    </div>
-                    <div id="ai-result-container" class="mt-6 p-6 rounded-lg bg-white dark:bg-gray-800 min-h-[120px] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
-                        <!-- Loading spinner -->
-                        <div id="loading-spinner" class="hidden justify-center items-center py-4">
-                            <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8">
+                        <form id="gemini-form">
+                            <label for="gemini-input" class="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Concept Explainer</label>
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="text" id="gemini-input" placeholder="e.g., Explain Kirchhoff's Voltage Law" class="flex-grow w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">Generate</button>
+                            </div>
+                        </form>
+                        <div class="mt-6 min-h-[150px] relative border-t border-gray-200 dark:border-gray-700 pt-6">
+                            <div id="gemini-spinner" class="hidden absolute inset-0 flex items-center justify-center">
+                                <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </div>
+                            <div id="gemini-welcome" class="text-center text-gray-500 dark:text-gray-400 p-4 flex flex-col items-center justify-center">
+                                <svg class="w-12 h-12 mb-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                                <p>Ask a question about any EEE concept to get started.</p>
+                            </div>
+                            <div id="gemini-output" class="hidden prose prose-blue dark:prose-invert max-w-none">
+                                <!-- AI Response will be injected here -->
+                            </div>
                         </div>
-                        <!-- Result content -->
-                        <div id="ai-result-content" class="prose prose-blue dark:prose-invert max-w-none">
-                            <p>Your explanation will appear here. Try asking about a topic like "Ohm's Law" or "what is a semiconductor?".</p>
-                        </div>
-                         <!-- Sources -->
-                        <div id="ai-sources" class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4"></div>
                     </div>
                 </div>
             </div>
