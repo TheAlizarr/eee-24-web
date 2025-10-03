@@ -456,7 +456,7 @@
             };
 
             try {
-                const response = await fetch('/.netlify/functions/gemini-proxy', {
+                const response = await fetch('gemini-proxy.js', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: prompt })
@@ -533,4 +533,5 @@
     </script>
 
 </body>
+
 </html>
