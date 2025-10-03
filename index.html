@@ -336,202 +336,153 @@
     </footer>
 
     <script>
-        // --- Theme Toggle ---
-        const themeToggle = document.getElementById('theme-toggle');
-        const lightIcon = document.getElementById('theme-icon-light');
-        const darkIcon = document.getElementById('theme-icon-dark');
-
-        // Check for saved theme in localStorage
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            lightIcon.classList.remove('hidden');
-            darkIcon.classList.add('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            lightIcon.classList.add('hidden');
-            darkIcon.classList.remove('hidden');
-        }
-
-        themeToggle.addEventListener('click', function() {
-            // toggle icons
-            lightIcon.classList.toggle('hidden');
-            darkIcon.classList.toggle('hidden');
-
-            // if set via local storage previously
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-            // if NOT set via local storage previously
-            } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
-            }
-        });
-
-        themeToggle.addEventListener('click', function() {
-            // toggle icons
-            lightIcon.classList.toggle('hidden');
-            darkIcon.classList.toggle('hidden');
-
-            // toggle dark class on the html element
-            document.documentElement.classList.toggle('dark');
-
-            // update local storage based on the new state
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.setItem('color-theme', 'dark');
-            } else {
-                localStorage.setItem('color-theme', 'light');
-            }
-        });
-
-        // --- Mobile Menu Toggle ---
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        // --- Animate on Scroll ---
-        const fadeInElements = document.querySelectorAll('.fade-in');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        // --- Smooth Scrolling for Nav Links ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 }
             });
-        }, {
-            threshold: 0.1
-        });
-
-        fadeInElements.forEach(el => {
-            observer.observe(el);
         });
 
         // --- Header Scroll Effect ---
         const header = document.getElementById('header');
-        window.onscroll = function() {
-            if (window.scrollY > 50) {
-                header.classList.add('shadow-lg', 'bg-white/95', 'dark:bg-gray-900/95');
-            } else {
-                header.classList.remove('shadow-lg', 'bg-white/95', 'dark:bg-gray-900/95');
-            }
-        };
-
-        // --- Gemini AI Feature ---
-        const generateBtn = document.getElementById('generate-explanation-btn');
-        const promptInput = document.getElementById('ai-prompt');
-        const resultContainer = document.getElementById('ai-result-container');
-        const resultContent = document.getElementById('ai-result-content');
-        const sourcesContainer = document.getElementById('ai-sources');
-        const loadingSpinner = document.getElementById('loading-spinner');
-
-        const callGeminiAPI = async (userQuery, retries = 3, delay = 1000) => {
-            loadingSpinner.style.display = 'flex';
-            resultContent.innerHTML = '';
-            sourcesContainer.innerHTML = '';
-            generateBtn.disabled = true;
-            
-            const systemPrompt = "You are an expert in Electrical and Electronics Engineering. Provide a short, quick, and brief explanation for the following concept, suitable for a quick review. Keep the explanation to a single paragraph and be concise.";
-            const apiKey = ""; // API key is handled by the environment.
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }],
-                systemInstruction: {
-                    parts: [{ text: systemPrompt }]
-                },
-            };
-
-            try {
-                const response = await fetch('/.netlify/functions/gemini-proxy', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: prompt })
-                });
-
-                if (!response.ok) {
-                    if (response.status === 429 && retries > 0) {
-                        // Exponential backoff
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        return callGeminiAPI(userQuery, retries - 1, delay * 2);
-                    }
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
-
-                const result = await response.json();
-                const candidate = result.candidates?.[0];
-
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    const text = candidate.content.parts[0].text;
-                    // Super basic markdown to HTML conversion
-                    let htmlContent = text
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                        .replace(/^(#+)\s*(.*)/gm, (match, hashes, content) => {
-                           const level = hashes.length;
-                           return `<h${level+2} class="text-xl font-semibold mt-4 mb-2">${content}</h${level+2}>`;
-                        })
-                        .replace(/^- (.*)/gm, '<li class="ml-4 list-disc">$1</li>')
-                        .replace(/\n/g, '<br>');
-
-                    resultContent.innerHTML = htmlContent;
-
-                    // Display sources
-                    const groundingMetadata = candidate.groundingMetadata;
-                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                        const sources = groundingMetadata.groundingAttributions
-                            .map(attribution => ({
-                                uri: attribution.web?.uri,
-                                title: attribution.web?.title,
-                            }))
-                            .filter(source => source.uri && source.title);
-
-                        if (sources.length > 0) {
-                            let sourcesHtml = '<h4 class="font-semibold text-sm mb-2 text-gray-600 dark:text-gray-400">Sources:</h4><ul class="space-y-1">';
-                            sources.forEach(source => {
-                                sourcesHtml += `<li><a href="${source.uri}" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:underline text-sm">${source.title}</a></li>`;
-                            });
-                            sourcesHtml += '</ul>';
-                            sourcesContainer.innerHTML = sourcesHtml;
-                        }
-                    }
+        if (header) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('shadow-lg', 'bg-white/95', 'dark:bg-gray-900/95');
                 } else {
-                    resultContent.innerHTML = '<p class="text-red-500">Sorry, I couldn\'t generate an explanation for that. Please try another topic.</p>';
+                    header.classList.remove('shadow-lg', 'bg-white/95', 'dark:bg-gray-900/95');
                 }
+            });
+        }
 
-            } catch (error) {
-                console.error("Gemini API call failed:", error);
-                resultContent.innerHTML = `<p class="text-red-500">An error occurred. Please check the console for details and try again later.</p>`;
-            } finally {
-                loadingSpinner.style.display = 'none';
-                generateBtn.disabled = false;
-            }
-        };
-
-        generateBtn.addEventListener('click', () => {
-            const query = promptInput.value.trim();
-            if (query) {
-                callGeminiAPI(query);
+        // --- Theme Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const lightIcon = document.getElementById('theme-icon-light');
+        const darkIcon = document.getElementById('theme-icon-dark');
+        
+        if (lightIcon && darkIcon) {
+            // Check for saved theme in localStorage and apply it
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
             } else {
-                resultContent.innerHTML = '<p class="text-yellow-500">Please enter a topic to explain.</p>';
+                document.documentElement.classList.remove('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
             }
-        });
 
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function() {
+                    lightIcon.classList.toggle('hidden');
+                    darkIcon.classList.toggle('hidden');
+                    document.documentElement.classList.toggle('dark');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                });
+            }
+        }
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // --- Intersection Observer for Fade-in Animation ---
+        const faders = document.querySelectorAll('.fade-in');
+        if (faders.length > 0) {
+            const appearOptions = { threshold: 0.3, rootMargin: "0px 0px -50px 0px" };
+            const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    appearOnScroll.unobserve(entry.target);
+                });
+            }, appearOptions);
+            faders.forEach(fader => appearOnScroll.observe(fader));
+        }
+
+        // --- Gemini AI Tool Logic ---
+        const geminiForm = document.getElementById('gemini-form');
+        const geminiInput = document.getElementById('gemini-input');
+        const geminiOutput = document.getElementById('gemini-output');
+        const geminiSpinner = document.getElementById('gemini-spinner');
+        const geminiWelcome = document.getElementById('gemini-welcome');
+
+        if (geminiForm && geminiInput && geminiOutput && geminiSpinner && geminiWelcome) {
+            geminiForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const prompt = geminiInput.value.trim();
+                if (!prompt) return;
+
+                geminiWelcome.classList.add('hidden');
+                geminiOutput.classList.add('hidden');
+                geminiSpinner.classList.remove('hidden');
+
+                try {
+                    // This is the crucial part that sends the prompt to our function
+                    const response = await fetch('/.netlify/functions/gemini-proxy', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ prompt: prompt })
+                    });
+
+                    const result = await response.json();
+                    
+                    if (!response.ok) {
+                        // If Netlify function returned an error, display it.
+                        // The error message from Google is now in result.body
+                        throw new Error(result.body || `API request failed with status ${response.status}`);
+                    }
+                    
+                    const candidate = result.candidates?.[0];
+                    let html = '';
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        const text = candidate.content.parts[0].text;
+                        html += `<p class="text-gray-700 dark:text-gray-300">${text.replace(/\n/g, '<br>')}</p>`;
+                        const groundingMetadata = candidate.groundingMetadata;
+                        if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                            const sources = groundingMetadata.groundingAttributions.map(attr => attr.web).filter(web => web?.uri && web?.title);
+                            if (sources.length > 0) {
+                                html += '<h4 class="font-semibold mt-4 mb-2 text-gray-800 dark:text-gray-200">Sources:</h4>';
+                                html += '<ul class="list-disc list-inside text-sm space-y-1">';
+                                sources.forEach(source => {
+                                    html += `<li><a href="${source.uri}" target="_blank" class="text-blue-600 dark:text-blue-500 hover:underline">${source.title}</a></li>`;
+                                });
+                                html += '</ul>';
+                            }
+                        }
+                    } else {
+                        html = '<p class="text-red-500">Sorry, I could not generate an explanation. Please try again.</p>';
+                    }
+                    geminiOutput.innerHTML = html;
+
+                } catch (error) {
+                    geminiOutput.innerHTML = `<p class="text-red-500 font-medium">An error occurred:</p><p class="text-red-500 text-sm mt-1">${error.message}</p>`;
+                    console.error("Gemini AI call failed:", error);
+                } finally {
+                    geminiSpinner.classList.add('hidden');
+                    geminiOutput.classList.remove('hidden');
+                }
+            });
+        }
     </script>
 
 </body>
-
 </html>
