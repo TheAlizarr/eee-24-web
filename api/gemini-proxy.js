@@ -1,40 +1,37 @@
-// This version adds logging at the very top to see the incoming request.
-
-exports.handler = async function(event) {
-    // **NEW DEBUGGING LINE**
-    // Let's log the entire body of the request that the function receives.
-    console.log("Function triggered. Received event body:", event.body);
-
-    if (event.httpMethod !== 'POST') {
-        return { statusCode: 405, body: 'Method Not Allowed' };
+// This is the Vercel-native format for a serverless function.
+export default async function handler(req, res) {
+    // 1. We only accept POST requests
+    if (req.method !== 'POST') {
+        res.status(405).json({ error: 'Method Not Allowed' });
+        return;
     }
 
-    // It's possible the body is missing, so we'll check for that.
-    if (!event.body) {
-        return { statusCode: 400, body: 'Error: Request body is empty.' };
-    }
-
-    const body = JSON.parse(event.body);
-    const userPrompt = body.prompt;
-
-    if (!userPrompt) {
-        console.error("Error: 'prompt' not found in the parsed body.", body);
-        return { statusCode: 400, body: "Error: 'prompt' key is missing from request." };
-    }
-
+    // 2. Get the API key securely from Vercel's environment variables
     const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        res.status(500).json({ error: 'API key not configured' });
+        return;
+    }
+
+    // 3. Get the user's prompt from the request body
+    const { prompt } = req.body;
+    if (!prompt) {
+        res.status(400).json({ error: 'Prompt is required' });
+        return;
+    }
+
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
-    const systemPrompt = "Provide a short, quick, and brief explanation for an undergraduate electrical engineering student. The explanation should be a single, concise paragraph.";
-
+    // 4. Construct the payload to send to Google
     const payload = {
-        contents: [{ parts: [{ text: userPrompt }] }],
+        contents: [{ parts: [{ text: prompt }] }],
         tools: [{ "google_search": {} }],
         systemInstruction: {
-            parts: [{ text: systemPrompt }]
+            parts: [{ text: "Provide a short, quick, and brief explanation in a single paragraph." }]
         },
     };
 
+    // 5. Call the Gemini API
     try {
         const geminiResponse = await fetch(apiUrl, {
             method: 'POST',
@@ -42,23 +39,18 @@ exports.handler = async function(event) {
             body: JSON.stringify(payload)
         });
 
+        const data = await geminiResponse.json();
+
         if (!geminiResponse.ok) {
-            const errorBody = await geminiResponse.text();
-            console.error('Error from Gemini API:', errorBody); 
-            return { 
-                statusCode: geminiResponse.status, 
-                body: `An error occurred with the Gemini API. Error: ${errorBody}` 
-            };
+            // If Google returns an error, send it back to the user
+            console.error('Error from Gemini API:', data);
+            res.status(geminiResponse.status).json({ body: data.error.message });
+        } else {
+            // If successful, send the data back to the user's browser
+            res.status(200).json(data);
         }
-
-        const result = await geminiResponse.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify(result)
-        };
-
     } catch (error) {
-        console.error('Server error during fetch:', error);
-        return { statusCode: 500, body: `Server error: ${error.toString()}` };
+        console.error('Failed to fetch from Gemini API:', error);
+        res.status(500).json({ error: 'Failed to fetch from Gemini API' });
     }
-};
+}
