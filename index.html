@@ -444,7 +444,7 @@
                     const result = await response.json();
                     
                     if (!response.ok) {
-                        // If Netlify function returned an error, display it.
+                        // If Vercel function returned an error, display it.
                         // The error message from Google is now in result.body
                         throw new Error(result.body || `API request failed with status ${response.status}`);
                     }
