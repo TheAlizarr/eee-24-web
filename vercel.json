@@ -1,0 +1,30 @@
+{
+  "functions": {
+    "api/gemini-proxy.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/gemini-proxy",
+      "destination": "/api/gemini-proxy"
+    }
+  ]
+}
+```
+
+Your final, correct project structure should now look like this:
+
+```
+My-Project-Folder/
+├── api/
+│   └── gemini-proxy.js
+│
+├── files/
+│   └── ...
+│
+├── index.html
+├── library.html
+├── package.json
+├── vercel.json   <-- The new, critical file
+└── ... and all your other HTML files
