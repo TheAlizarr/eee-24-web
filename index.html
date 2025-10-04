@@ -149,8 +149,8 @@
                         <a href="#resources" class="btn-responsive bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700">
                             Explore Resources
                         </a>
-                         <a href="#" class="btn-responsive bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-300 dark:hover:bg-gray-600">
-                            AI Chatbot <span class="text-xs ml-1">(Soon)</span>
+                         <a href="#ai-tools" class="btn-responsive bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+                            AI Study Tool
                         </a>
                     </div>
                 </div>
@@ -161,8 +161,8 @@
         <section id="updates" class="py-20 bg-gray-50 dark:bg-gray-900">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Latest Updates</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Stay current with the latest news and announcements.</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Updates</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">News and announcements.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Update Card 1 -->
@@ -233,14 +233,16 @@
         </section>
 
         <!-- AI Study Tools Section -->
-         <section id="ai-tools" class="py-20 bg-gray-50 dark:bg-gray-900">
+         <section id="ai-tools" class="py-20 bg-gray-50 dark:bg-gray-800">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">AI Study Tools</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mt-2">Powered by Gemini</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
+                        AI Study Tools
+                    </h2>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">Powered by Google Gemini</p>
                 </div>
                 <div class="max-w-3xl mx-auto">
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 sm:p-8">
+                    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 sm:p-8">
                         <form id="gemini-form">
                             <label for="gemini-input" class="block text-lg font-medium text-gray-800 dark:text-gray-200 mb-3">Concept Explainer</label>
                             <div class="flex flex-col sm:flex-row gap-3">
@@ -248,12 +250,12 @@
                                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">Generate</button>
                             </div>
                         </form>
-                        <div class="mt-6 min-h-[150px] relative border-t border-gray-200 dark:border-gray-700 pt-6">
+                        <div class="mt-6 min-h-[150px] relative border-t border-gray-100 dark:border-gray-600 pt-6">
                             <div id="gemini-spinner" class="hidden absolute inset-0 flex items-center justify-center">
                                 <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                             </div>
-                            <div id="gemini-welcome" class="text-center text-gray-500 dark:text-gray-400 p-4 flex flex-col items-center justify-center">
-                                <svg class="w-12 h-12 mb-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                            <div id="gemini-welcome" class="text-center text-gray-400 dark:text-gray-300 p-4 flex flex-col items-center justify-center">
+                                <svg class="w-12 h-12 mb-2 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
                                 <p>Ask a question about any EEE concept to get started.</p>
                             </div>
                             <div id="gemini-output" class="hidden prose prose-blue dark:prose-invert max-w-none">
@@ -275,28 +277,30 @@
                 <div class="max-w-4xl mx-auto">
                     <!-- Category: Online Tools -->
                     <div class="mb-8 fade-in">
-                        <h3 class="text-2xl font-semibold mb-4 border-b-2 border-blue-500 pb-2">Online Tools</h3>
+                        <h3 class="text-2xl font-semibold mb-4 border-b-2 border-blue-500 pb-2">Online Resources</h3>
                         <ul class="space-y-3 list-disc list-inside text-gray-700 dark:text-gray-300">
-                            <li><a href="#" class="hover:underline">Falstad Circuit Simulator</a></li>
-                            <li><a href="#" class="hover:underline">WolframAlpha: Computational Intelligence</a></li>
-                            <li><a href="#" class="hover:underline">Tinkercad: Free Online Simulator</a></li>
+                            <li><a href="https://www.ieee.org/" class="hover:underline">IEEE Website</a></li>
+                            <li><a href="https://www.falstad.com/circuit/" class="hover:underline">Falstad Circuit Simulator</a></li>
+                            <li><a href="https://www.tinkercad.com/" class="hover:underline">Tinkercad: Free Online Simulator</a></li>
+                            <li><a href="https://ocw.mit.edu/" class="hover:underline">MIT OpenCourseware</a></li>                       
                         </ul>
                     </div>
                      <!-- Category: YouTube Playlists -->
                     <div class="mb-8 fade-in" style="transition-delay: 100ms;">
                         <h3 class="text-2xl font-semibold mb-4 border-b-2 border-green-500 pb-2">YouTube Playlists</h3>
                         <ul class="space-y-3 list-disc list-inside text-gray-700 dark:text-gray-300">
-                             <li><a href="#" class="hover:underline">Neso Academy: Digital Electronics</a></li>
-                             <li><a href="#" class="hover:underline">The Organic Chemistry Tutor: Circuit Analysis</a></li>
-                             <li><a href="#" class="hover:underline">3Blue1Brown: Essence of Linear Algebra</a></li>
+                             <li><a href="http://www.youtube.com/playlist?list=PLah6faXAgguOeMUIxS22ZU4w5nDvCl5gs" class="hover:underline">CodeNMore: Beginner Electronics</a></li>
+                             <li><a href="http://www.youtube.com/playlist?list=PLWv9VM947MKi_7yJ0_FCfzTBXpQU-Qd3K" class="hover:underline">The Engineering Mindset: Electrical Engineering Basics</a></li>
+                             <li><a href="http://www.youtube.com/playlist?list=PLho7ncbqgQbviwKeoJybXPnFY5t590dRJ" class="hover:underline">Learning Vibes: MATLAB Tutorial</a></li>
                         </ul>
                     </div>
                      <!-- Category: Git Repos -->
                     <div class="fade-in" style="transition-delay: 200ms;">
                         <h3 class="text-2xl font-semibold mb-4 border-b-2 border-purple-500 pb-2">GitHub Repositories</h3>
                         <ul class="space-y-3 list-disc list-inside text-gray-700 dark:text-gray-300">
-                            <li><a href="#" class="hover:underline">Awesome Electronics: A curated list of resources</a></li>
-                            <li><a href="#" class="hover:underline">DSP Lab Projects in Python</a></li>
+                            <li><a href="https://github.com/topics/electronics" class="hover:underline">Awesome Electronics: A curated list of resources</a></li>
+                            <li><a href="https://github.com/dfieschko/EE-Resources" class="hover:underline">EE-Resources: Electrical Engineering Resources</a></li>
+                            <li><a href="https://github.com/topics/electronics-projects?l=c%2B%2B&o=desc&s=stars" class="hover:underline">Electronics: Project Ideas</a></li>
                         </ul>
                     </div>
                 </div>
@@ -321,7 +325,7 @@
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
                     </a>
                     <!-- Social Icon: Discord -->
-                    <a href="#" class="text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+                    <a href="https://discord.gg/EmenjtnrdK" class="text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
                          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.36986C18.2751 3.44336 16.1292 3 13.8956 3C11.6621 3 9.51619 3.44336 7.47432 4.36986C5.43245 5.29635 3.86818 6.64632 2.93952 8.2828C2.01085 9.91927 1.75 11.8992 1.75 13.9492C1.75 17.1591 3.23538 20.0491 5.72832 22.069C6.98506 23.0189 8.44199 23.4989 10.1581 23.4989C11.1219 23.4989 12.0463 23.2989 12.8715 22.849C13.6966 22.399 14.3924 21.789 14.9385 20.9791L15.2289 20.5491C15.0006 20.6791 14.7525 20.7891 14.4848 20.8791C14.2172 20.9691 13.9495 21 13.6818 21C11.6713 21 9.99127 20.4491 8.64184 19.3492C7.29241 18.2492 6.5 16.6992 6.5 14.6992C6.5 13.8892 6.60965 13.1192 6.829 12.3892C7.04834 11.6592 7.37735 10.9892 7.81602 10.3792C8.2547 9.76925 8.78304 9.25927 9.40104 8.84929C10.019 8.43932 10.7067 8.15933 11.464 8.00934C11.6833 7.95934 11.8927 7.91934 12.0922 7.88934C12.2917 7.85934 12.4912 7.83934 12.6906 7.82934C12.8901 7.81934 13.1094 7.80934 13.3484 7.80934C15.4093 7.80934 17.1509 8.35932 18.5732 9.45929C19.9955 10.5593 20.75 12.1192 20.75 14.1392C20.75 14.8892 20.6207 15.6192 20.362 16.3292C20.1033 17.0392 19.725 17.6992 19.227 18.3092C18.729 18.9192 18.1317 19.4592 17.435 19.9292C16.7383 20.3992 15.9722 20.7891 15.1367 21.0991C15.5463 21.6891 16.0356 22.2591 16.6046 22.809C17.1735 23.359 17.7922 23.7289 18.4605 23.9189C19.2085 24.1489 20.0161 24.1489 20.8834 23.9189C21.7506 23.6889 22.5481 23.239 23.2759 22.569C24 21.899 24.5244 21.0491 24.8491 20.0191C25.1738 18.9891 25.25 17.8992 25.0772 16.7492C24.9045 15.5992 24.4727 14.4992 23.782 13.4492C23.0913 12.3992 22.1812 11.4592 21.0519 10.6292C22.0615 9.38927 22.5663 7.95933 22.5663 6.33938C22.5663 5.51941 22.407 4.75943 22.0883 4.05944C21.7697 3.35946 21.3117 2.74948 20.7144 2.2295C20.1171 1.70952 19.4001 1.29954 18.5634 0.999554C17.7268 0.699569 16.8006 0.5 15.785 0.5C14.7694 0.5 13.8035 0.649572 12.8873 0.949557C11.9712 1.24954 11.1347 1.69952 10.3781 2.2995C9.62145 2.89948 8.97447 3.62946 8.43715 4.48944C7.89984 5.34941 7.5 6.30938 7.5 7.36936C7.5 8.01934 7.58965 8.62932 7.76898 9.19929C7.94832 9.76927 8.18732 10.2793 8.486 10.7293C8.18732 10.5993 7.91832 10.4693 7.67898 10.3393C7.43965 10.2093 7.23 10.0893 7.04999 9.97931C6.31266 9.54933 5.645 9.19934 5.04699 8.92936C4.44898 8.65937 3.90065 8.45938 3.40198 8.32939C3.16265 8.2494 2.93332 8.18941 2.71398 8.14941C2.49465 8.10942 2.27531 8.07942 2.05598 8.05943C2.42465 6.88946 3.09132 5.92949 4.05598 5.17952C5.02065 4.42955 6.18465 3.95957 7.54798 3.76958C7.38865 3.56959 7.24898 3.3796 7.12898 3.2096C7.00898 3.03961 6.90865 2.87962 6.82798 2.72962C6.00065 1.70966 5.68698 0.89968 5.88698 0.299701C6.08698 -0.300278 6.78265 -0.550268 7.97398 -0.450272C9.16531 -0.350275 10.2273 -0.0102834 11.159 -0.490265L12.7836 1.13972C12.9329 1.17972 13.0823 1.20972 13.2316 1.22972C13.3809 1.24972 13.5403 1.25972 13.7196 1.25972C14.7353 1.25972 15.6813 1.45971 16.5576 1.85969C17.434 2.25966 18.2006 2.81964 18.8576 3.5396C19.5146 4.25957 20.0123 5.09953 20.3506 6.05948C20.689 7.01943 20.8483 8.02938 20.8483 9.08934C20.8483 9.73932 20.7686 10.3693 20.6093 10.9793C20.4499 11.5892 20.2109 12.1492 19.8923 12.6592C20.4406 12.5292 20.9293 12.4492 21.3583 12.4192C21.7873 12.3892 22.166 12.3992 22.495 12.4492C22.2163 12.0192 21.997 11.6092 21.8376 11.2193C21.6783 10.8293 21.5686 10.4693 21.5086 10.1393C21.369 9.38933 21.5186 8.69936 21.958 8.06938C22.3973 7.43941 23.0463 6.96943 23.905 6.65944C23.6363 6.45945 23.3776 6.27945 23.1289 6.11946C22.8803 5.95946 22.6413 5.80947 22.412 5.66947C21.6846 5.1795 20.8576 4.82951 19.9309 4.61952C18.9943 4.40954 18.008 4.30954 16.9719 4.30954C16.3219 4.30954 15.6919 4.37954 15.082 4.51953C14.472 4.65952 13.882 4.8595 13.312 5.11948C13.882 4.93949 14.4223 4.7995 14.9329 4.70951C15.4436 4.61952 15.9146 4.56952 16.3459 4.55952C16.2259 4.85951 16.1159 5.15949 16.0159 5.45948C15.9159 5.75946 15.8259 6.05945 15.7459 6.35944L14.7359 8.35938C15.5459 8.75936 16.2159 9.25933 16.7459 9.85929C17.2759 10.4593 17.6559 11.1492 17.8859 11.9292C17.9959 12.3192 18.0459 12.7192 18.0359 13.1292C18.0259 13.5392 17.9659 13.9492 17.8559 14.3592L19.5359 13.8892C19.4659 13.5292 19.4359 13.1692 19.4459 12.8092C19.4559 12.4492 19.5059 12.0992 19.5959 11.7593C19.8959 10.6593 19.7459 9.74933 19.1459 9.02936C18.5459 8.30938 17.6059 7.8294 16.3259 7.58941C16.5659 7.01943 16.7359 6.42945 16.8359 5.81947C16.9359 5.20948 16.9759 4.5995 16.9559 3.98952C17.4259 3.86953 17.8859 3.80954 18.3359 3.80954C19.0359 3.80954 19.6859 3.92953 20.2859 4.16952C20.8859 4.4095 21.4159 4.75948 21.8759 5.21946L20.317 4.36986Z"></path></svg>
                     </a>
                 </div>
